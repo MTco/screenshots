@@ -370,6 +370,7 @@ Shot.get = function(backend, id, deviceId) {
     shot.urlIfDeleted = rawValue.url;
     shot.expireTime = rawValue.expireTime;
     shot.deleted = rawValue.deleted;
+    shot.dmca = rawValue.dmca;
     return shot;
   });
 };
@@ -398,7 +399,7 @@ Shot.getRawValue = function(id, deviceId) {
   if (!id) {
     throw new Error("Empty id: " + id);
   }
-  let query = `SELECT value, deviceid, url, title, expire_time, deleted FROM data WHERE id = $1`;
+  let query = `SELECT value, deviceid, url, title, expire_time, deleted, dmca FROM data WHERE id = $1`;
   let params = [id];
   if (deviceId) {
     query += ` AND deviceid = $2`;
@@ -418,7 +419,8 @@ Shot.getRawValue = function(id, deviceId) {
       url: row.url,
       title: row.title,
       expireTime: row.expire_time,
-      deleted: row.deleted
+      deleted: row.deleted,
+      dmca: row.dmca
     };
   });
 };
